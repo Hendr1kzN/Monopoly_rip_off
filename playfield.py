@@ -1,19 +1,17 @@
-
 import player
 import random 
 
+def role_dice():
+    return random.randint(1, 6)
+
 class Playfield():
     
-    def __init__(self, player_count: int):
+    def __init__(self):
         self.player_to_move = 0
-        self.player_count = player_count
-        self.player_ids = []
+        self.players = []
     
     def add_player_to_playfield(self, player :player.Player):
-        self.player_ids.append(player)
+        self.players.append(player)
     
-    def return_player_how_is_in_charge_to_move(self):
-        return self.player_to_move
-    
-    def role_dice(self):
-        return random.randintnd(1, 6)
+    def move_to_next_player(self):
+        self.player_to_move = (self.player_to_move + 1) %len(self.players)

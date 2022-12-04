@@ -15,3 +15,6 @@ class Playfield():
     
     def move_to_next_player(self):
         self.player_to_move = (self.player_to_move + 1) %len(self.players)
+        
+    def return_player_to_move(self):
+        return self.players[self.player_to_move]

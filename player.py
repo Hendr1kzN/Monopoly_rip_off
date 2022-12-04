@@ -19,3 +19,6 @@ class Player:
         if new_playerpositon >= 40:
             self.add_money(200)
         self.player_position = new_playerpositon%40
+    
+    def do_action_on_current_field(self):
+        pass

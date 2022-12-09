@@ -28,7 +28,6 @@ gamecharacter_male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_m
 gamecharacter_male2 = pygame.image.load("images\Character\8Pixel_gamecharacter_male2.png")
 gamecharacter_male3 = pygame.image.load("images\Character\8Pixel_gamecharacter_male3.png")
 
-
 text_to_show_dice_role = font.render('', True, blue)
 textRect_dice_role = text_to_show_dice_role.get_rect()
 textRect_dice_role.center = (330, 170)
@@ -43,14 +42,14 @@ textRect_player_in_charge_pt2.center = (1100, 50)
 
 text_money_to_see_how_much_money_set_player_has = font.render('money:', True, blue)
 textRect_money_to_see_how_much_money_set_player_has = text_money_to_see_how_much_money_set_player_has.get_rect()
-textRect_money_to_see_how_much_money_set_player_has.center = (1100, 118)
+textRect_money_to_see_how_much_money_set_player_has.center = (1100, 152)
 
 current_playfield = playfield.Playfield()
 p1 = player.Player('p1', gamecharacter_female1)
 p2 = player.Player('player2', gamecharacter_male1)
 current_playfield.add_player_to_playfield(p1)
 current_playfield.add_player_to_playfield(p2)
-
+count_doubles = 0 
 
 # gameloop
 while True:
@@ -61,10 +60,10 @@ while True:
     
     text_money_of_player = font.render(str(current_playfield.return_player_to_move().money) + '€', True, blue)
     textRect_money_of_player = text_money_of_player.get_rect()
-    textRect_money_of_player.center = (1100, 152)
+    textRect_money_of_player.center = (1100, 186)
+    
     # handel events
     for event in pygame.event.get():
-        
 		
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -75,16 +74,31 @@ while True:
             if event.key == pygame.K_UP:
                 dice1 = playfield.role_dice()
                 dice2 = playfield.role_dice()
+                text_to_show_dice_role = font.render(('you roled a: ' + str(dice1) + ' + '+ str(dice2) +' = ' + str (dice1+dice2)), True, blue)
                 
-                text_to_show_dice_role = font.render(('you roled a: '+str(dice1) + ' + '+ str(dice2) +' = ' + str (dice1+dice2)), True, blue)
+                if current_playfield.return_player_to_move().player_position == 40:
+                    if dice1 == dice2:
+                        current_playfield.return_player_to_move().player_moves(dice1+dice2)
+                    else:
+                        current_playfield.move_to_next_player()
                 
-                current_playfield.players[current_playfield.player_to_move].player_moves(dice1+ dice2)
+                else:
+                    if count_doubles >= 2 and dice1 == dice2:
+                        current_playfield.return_player_to_move().go_to_jail()
+                        current_playfield.move_to_next_player()
+                    else:
+                        current_playfield.return_player_to_move().player_moves(dice1+ dice2)
+                
+                    if dice1 != dice2:
+                        count_doubles = 0
+                        current_playfield.move_to_next_player()
+                    else:
+                        count_doubles += 1
                 text_money_of_player = font.render(str(current_playfield.return_player_to_move().money) + '€', True, blue)
                 
-                current_playfield.move_to_next_player()
-                
             if event.key == pygame.K_DOWN:
-                pass
+                current_playfield.return_player_to_move().go_to_jail()
+                current_playfield.move_to_next_player()
             if event.key == pygame.K_LEFT:
                 pass
             if event.key == pygame.K_RIGHT:

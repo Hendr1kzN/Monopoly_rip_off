@@ -15,10 +15,15 @@ class Player:
         self.money -= money_removed
     
     def player_moves(self, number_of_moves: int):
+        if self.player_position == 40:
+            self.player_position = 10
         new_playerpositon = self.player_position + number_of_moves
         if new_playerpositon >= 40:
             self.add_money(200)
         self.player_position = new_playerpositon%40
     
+    def go_to_jail(self):
+        self.player_position = 40
+        
     def do_action_on_current_field(self):
         pass

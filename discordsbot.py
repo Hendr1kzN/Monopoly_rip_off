@@ -15,7 +15,7 @@ discord_bot = commands.Bot(command_prefix='!', intents=intents)
 async def send_data(ctx):
     await ctx.send("hello there")
 
-@discord_bot.command(name="play")
+@discord_bot.command(name="join")
 async def join(ctx):
     channel = ctx.message.author.voice.channel
     if not ctx.guild.voice_client in discord_bot.voice_clients:
@@ -30,5 +30,15 @@ async def leave(ctx):
         await voice_client.disconnect()
     else:
         await ctx.send("The bot is not connected to a voice channel.")
+    
+@discord_bot.command(name="add")
+async def add_player(ctx):
+    
+    
+    
+       
+@discord_bot.command(name="play")#start game
+async def start_game(ctx):
+    pass
 
 discord_bot.run(TOKEN)

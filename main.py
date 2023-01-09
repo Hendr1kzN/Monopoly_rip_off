@@ -28,24 +28,19 @@ gamecharacter_male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_m
 gamecharacter_male2 = pygame.image.load("images\Character\8Pixel_gamecharacter_male2.png")
 gamecharacter_male3 = pygame.image.load("images\Character\8Pixel_gamecharacter_male3.png")
 
-def render_text(text: str, x_coord: int, y_coord: int):
+def render_text_in_blue(text: str, x_coord: int, y_coord: int):
     text_with_font = font.render(text, True, blue)
     textRect = text_with_font.get_rect()
     textRect.center = (x_coord, y_coord)
-    return textRect
+    return text_with_font, textRect
 
-textRect_dice_role = render_text('', 330, 170)
-#text_to_show_dice_role = font.render('', True, blue)
-#textRect_dice_role = text_to_show_dice_role.get_rect()
-#textRect_dice_role.center = (330, 170)
+text_to_show_dice_role, textRect_dice_role = render_text_in_blue('', 330, 170)
 
-text_player_in_charge = font.render('Player in', True, blue)
-textRect_player_in_charge = text_player_in_charge.get_rect()
-textRect_player_in_charge.center = (1100, 16)
 
-text_player_in_charge_pt2 = font.render('charge:', True, blue)
-textRect_player_in_charge_pt2 = text_player_in_charge_pt2.get_rect()
-textRect_player_in_charge_pt2.center = (1100, 50)
+text_player_in_charge, textRect_player_in_charge = render_text_in_blue('Player in', 1100, 16)
+
+
+text_player_in_charge_pt2, textRect_player_in_charge_pt2 = render_text_in_blue('charge:', 1100, 50)
 
 text_money_to_see_how_much_money_set_player_has = font.render('money:', True, blue)
 textRect_money_to_see_how_much_money_set_player_has = text_money_to_see_how_much_money_set_player_has.get_rect()
@@ -56,7 +51,7 @@ p1 = player.Player('p1', gamecharacter_female1)
 p2 = player.Player('player2', gamecharacter_male1)
 current_playfield.add_player_to_playfield(p1)
 current_playfield.add_player_to_playfield(p2)
-count_doubles = 0 
+count_doubles = 0
 
 # gameloop
 while True:

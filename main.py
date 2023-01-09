@@ -3,7 +3,7 @@ import pygame
 import playfield
 import player
 import positions
-
+import time
 # importing sys module
 import sys
 
@@ -28,9 +28,16 @@ gamecharacter_male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_m
 gamecharacter_male2 = pygame.image.load("images\Character\8Pixel_gamecharacter_male2.png")
 gamecharacter_male3 = pygame.image.load("images\Character\8Pixel_gamecharacter_male3.png")
 
-text_to_show_dice_role = font.render('', True, blue)
-textRect_dice_role = text_to_show_dice_role.get_rect()
-textRect_dice_role.center = (330, 170)
+def render_text(text: str, x_coord: int, y_coord: int):
+    text_with_font = font.render(text, True, blue)
+    textRect = text_with_font.get_rect()
+    textRect.center = (x_coord, y_coord)
+    return textRect
+
+textRect_dice_role = render_text('', 330, 170)
+#text_to_show_dice_role = font.render('', True, blue)
+#textRect_dice_role = text_to_show_dice_role.get_rect()
+#textRect_dice_role.center = (330, 170)
 
 text_player_in_charge = font.render('Player in', True, blue)
 textRect_player_in_charge = text_player_in_charge.get_rect()
@@ -76,11 +83,18 @@ while True:
                 dice2 = playfield.role_dice()
                 text_to_show_dice_role = font.render(('you roled a: ' + str(dice1) + ' + '+ str(dice2) +' = ' + str (dice1+dice2)), True, blue)
                 
+                
                 if current_playfield.return_player_to_move().player_position == 40:
                     if dice1 == dice2:
                         current_playfield.return_player_to_move().player_moves(dice1+dice2)
+                    
+                    elif current_playfield.return_player_to_move().rounds_in_jail >= 2:
+                        current_playfield.return_player_to_move().pay_money(50)
+                        current_playfield.return_player_to_move().player_moves(dice1 +dice2)
+                        
                     else:
-                        current_playfield.move_to_next_player()
+                        current_playfield.return_player_to_move().rounds_in_jail += 1
+                    current_playfield.move_to_next_player()
                 
                 else:
                     if count_doubles >= 2 and dice1 == dice2:
@@ -114,5 +128,8 @@ while True:
     surface.blit(text_money_of_player, textRect_money_of_player)
     for player in current_playfield.players:
         surface.blit(player.player_model, positions.positions[player.player_position])
+    
+    pygame.image.save(surface, "GameStates/current_Playfield.png")
+    
     
     display.update()

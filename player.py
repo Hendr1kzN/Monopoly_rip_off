@@ -7,11 +7,12 @@ class Player:
         self.money = 1500
         self.bought_items = []
         self.player_name = player_name
+        self.rounds_in_jail = 0
     
     def add_money(self, money_added: int):
         self.money += money_added
         
-    def give_money(self, money_removed: int):
+    def pay_money(self, money_removed: int):
         self.money -= money_removed
     
     def player_moves(self, number_of_moves: int):

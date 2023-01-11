@@ -4,10 +4,8 @@ import playfield
 import player
 import positions
 import time
-# importing sys module
 import sys
 
-# initialising pygame
 pygame.init()
 
 white = (255, 255, 255)
@@ -36,15 +34,11 @@ def render_text_in_blue(text: str, x_coord: int, y_coord: int):
 
 text_to_show_dice_role, textRect_dice_role = render_text_in_blue('', 330, 170)
 
-
 text_player_in_charge, textRect_player_in_charge = render_text_in_blue('Player in', 1100, 16)
-
 
 text_player_in_charge_pt2, textRect_player_in_charge_pt2 = render_text_in_blue('charge:', 1100, 50)
 
-text_money_to_see_how_much_money_set_player_has = font.render('money:', True, blue)
-textRect_money_to_see_how_much_money_set_player_has = text_money_to_see_how_much_money_set_player_has.get_rect()
-textRect_money_to_see_how_much_money_set_player_has.center = (1100, 152)
+text_money_to_see_how_much_money_set_player_has, textRect_money_to_see_how_much_money_set_player_has = render_text_in_blue('money:', 1100, 152)
 
 current_playfield = playfield.Playfield()
 p1 = player.Player('p1', gamecharacter_female1)
@@ -56,13 +50,9 @@ count_doubles = 0
 # gameloop
 while True:
     # set text on the right of playfield
-    text_player_name = font.render(current_playfield.return_player_to_move().player_name, True, blue)
-    textRect_player_name = text_player_name.get_rect()
-    textRect_player_name.center = (1100, 84)
+    text_player_name, textRect_player_name = render_text_in_blue(current_playfield.return_player_to_move().player_name, 1100, 84)
     
-    text_money_of_player = font.render(str(current_playfield.return_player_to_move().money) + '€', True, blue)
-    textRect_money_of_player = text_money_of_player.get_rect()
-    textRect_money_of_player.center = (1100, 186)
+    text_money_of_player, textRect_money_of_player = render_text_in_blue(str(current_playfield.return_player_to_move().money) + '€', 1100, 186)
     
     # handel events
     for event in pygame.event.get():
@@ -125,6 +115,5 @@ while True:
         surface.blit(player.player_model, positions.positions[player.player_position])
     
     pygame.image.save(surface, "GameStates/current_Playfield.png")
-    
     
     display.update()

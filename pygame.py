@@ -5,6 +5,8 @@ import player
 import positions
 import sys
 
+
+
 pygame.init()
 
 white = (255, 255, 255)
@@ -31,7 +33,22 @@ def render_text_in_blue(text: str, x_coord: int, y_coord: int):
     textRect.center = (x_coord, y_coord)
     return text_with_font, textRect
 
-text_to_show_dice_role, textRect_dice_role = render_text_in_blue('', 330, 170)
+def add_to_lists(list1, list2, object1, object2):
+    list1.append(object1)
+    list2.append(object2)
+
+
+def render_all_texts(list_of_texts, list_of_textRect):
+    if len(list_of_texts) == len(list_of_textRect):
+        for i in len(list_of_texts):
+            surface.blit(list_of_texts[i], list_of_textRect[i])
+    else:
+        raise Exception(f"The list_of_text and list_of_textRect have differet sizes. list_of_text size: {len(list_of_texts)}, listof_textRect: {len(list_of_textRect)}")
+        
+list_of_text = []
+list_of_textRect = []
+
+text_dice_role, textRect_dice_role = render_text_in_blue('', 330, 170)
 
 text_player_in_charge, textRect_player_in_charge = render_text_in_blue('Player in', 1100, 16)
 
@@ -41,13 +58,14 @@ text_money_to_see_how_much_money_set_player_has, textRect_money_to_see_how_much_
 
 
 def add_players_to_playfield(list_of_players):
-    playfield = playfield.Playfield()
+    playfield_to_add_players_to = playfield.Playfield()
     for user in list_of_players:
-        player = player.Player(user.name, f"Avatars/{user}_avatar.jpg")
-        playfield.add_player_to_playfield(player)
-    return playfield
+        player_avatar = pygame.image.load(f"Avatars/{user}_avatar.jpg")
+        player = player.Player(user.name, player_avatar)
+        playfield_to_add_players_to.add_player_to_playfield(player)
+    return playfield_to_add_players_to
 
-current_playfield = add_players_to_playfield()
+current_playfield = add_players_to_playfield()# the discord bot needs to fill in the players
 
 
 count_doubles = 0
@@ -103,10 +121,6 @@ while True:
             if event.key == pygame.K_DOWN:
                 current_playfield.return_player_to_move().go_to_jail()
                 current_playfield.move_to_next_player()
-            if event.key == pygame.K_LEFT:
-                pass
-            if event.key == pygame.K_RIGHT:
-                pass
     
     surface.fill(white)
     surface.blit(backgroud_pickture, (0, 0))

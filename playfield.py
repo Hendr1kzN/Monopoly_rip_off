@@ -14,7 +14,10 @@ class Playfield():
         self.players.append(player)
     
     def move_to_next_player(self):
+        
         self.index_of_player_to_move = (self.index_of_player_to_move + 1) %len(self.players)
         
     def return_player_to_move(self):
-        return self.players[self.index_of_player_to_move]
+        if len(self.players) != 0:
+            return self.players[self.index_of_player_to_move]
+        raise Exception('There are no players playing.')

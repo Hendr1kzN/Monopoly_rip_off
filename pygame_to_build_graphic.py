@@ -65,6 +65,12 @@ def add_players_to_playfield(list_of_players):
         playfield_to_add_players_to.add_player_to_playfield(player)
     return playfield_to_add_players_to
 
+def start_turn_by_rolling_dice():
+    dice1 = playfield.role_dice()
+    dice2 = playfield.role_dice()
+    text_to_show_dice_role = font.render(('you roled a: ' + str(dice1) + ' + '+ str(dice2) +' = ' + str (dice1+dice2)), True, blue)
+    return dice1, dice2, text_to_show_dice_role
+
 #current_playfield = add_players_to_playfield()# the discord bot needs to fill in the players
 current_playfield = playfield.Playfield()
 
@@ -87,10 +93,7 @@ while True:
             
         # creating dice role
             if event.key == pygame.K_UP:
-                dice1 = playfield.role_dice()
-                dice2 = playfield.role_dice()
-                text_to_show_dice_role = font.render(('you roled a: ' + str(dice1) + ' + '+ str(dice2) +' = ' + str (dice1+dice2)), True, blue)
-                
+                dice1, dice2, text_to_show_dice_role = start_turn_by_rolling_dice()
                 
                 if current_playfield.return_player_to_move().player_position == 40:
                     if dice1 == dice2:
@@ -98,7 +101,7 @@ while True:
                     
                     elif current_playfield.return_player_to_move().rounds_in_jail >= 2:
                         current_playfield.return_player_to_move().pay_money(50)
-                        current_playfield.return_player_to_move().player_moves(dice1 +dice2)
+                        current_playfield.return_player_to_move().player_moves(dice1+dice2)
                         
                     else:
                         current_playfield.return_player_to_move().rounds_in_jail += 1

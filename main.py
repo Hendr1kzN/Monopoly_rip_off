@@ -3,7 +3,6 @@ import pygame
 import playfield
 import player
 import positions
-import time
 import sys
 
 pygame.init()
@@ -19,12 +18,12 @@ backgroud_pickture = pygame.image.load("images\The_Capitalism_game_board_1000x10
 
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-gamecharacter_female1 = pygame.image.load("images\Character\8Pixel_gamecharacter_female1.png")
-gamecharacter_female2 = pygame.image.load("images\Character\8Pixel_gamecharacter_female2.png")
-gamecharacter_female3 = pygame.image.load("images\Character\8Pixel_gamecharacter_female3.png")
-gamecharacter_male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_male1.png")
-gamecharacter_male2 = pygame.image.load("images\Character\8Pixel_gamecharacter_male2.png")
-gamecharacter_male3 = pygame.image.load("images\Character\8Pixel_gamecharacter_male3.png")
+#gamecharacter_female1 = pygame.image.load("images\Character\8Pixel_gamecharacter_female1.png")
+#gamecharacter_female2 = pygame.image.load("images\Character\8Pixel_gamecharacter_female2.png")
+#gamecharacter_female3 = pygame.image.load("images\Character\8Pixel_gamecharacter_female3.png")
+#gamecharacter_male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_male1.png")
+#gamecharacter_male2 = pygame.image.load("images\Character\8Pixel_gamecharacter_male2.png")
+#gamecharacter_male3 = pygame.image.load("images\Character\8Pixel_gamecharacter_male3.png")
 
 def render_text_in_blue(text: str, x_coord: int, y_coord: int):
     text_with_font = font.render(text, True, blue)
@@ -40,11 +39,17 @@ text_player_in_charge_pt2, textRect_player_in_charge_pt2 = render_text_in_blue('
 
 text_money_to_see_how_much_money_set_player_has, textRect_money_to_see_how_much_money_set_player_has = render_text_in_blue('money:', 1100, 152)
 
-current_playfield = playfield.Playfield()
-p1 = player.Player('p1', gamecharacter_female1)
-p2 = player.Player('player2', gamecharacter_male1)
-current_playfield.add_player_to_playfield(p1)
-current_playfield.add_player_to_playfield(p2)
+
+def add_players_to_playfield(list_of_players):
+    playfield = playfield.Playfield()
+    for user in list_of_players:
+        player = player.Player(user.name, f"Avatars/{user}_avatar.jpg")
+        playfield.add_player_to_playfield(player)
+    return playfield
+
+current_playfield = add_players_to_playfield()
+
+
 count_doubles = 0
 
 # gameloop

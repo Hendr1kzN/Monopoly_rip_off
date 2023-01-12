@@ -177,6 +177,3 @@ def setup_bord():
             all_squares_of_the_bord.append(squares.Square(list_square_names[i], actions[i], int(price[i]), positions[i][0], positions[i][1]))
         return all_squares_of_the_bord
     raise Exception("can't setup bord!")
-
-bord = setup_bord()
-print(bord[0])

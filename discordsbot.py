@@ -40,7 +40,7 @@ async def leave(ctx):
         await ctx.send("The bot is not connected to a voice channel.")
 
 
-async def lobby_join_helper(ctx, user):
+async def lobby_join(ctx, user):
     if len(list_of_players)>=6:
         await ctx.send(f"Sorry, {user.mention}. The lobby is full.")
     elif not user.mention in list_of_players:
@@ -55,16 +55,16 @@ async def lobby_join_helper(ctx, user):
         await ctx.send(f"{user.mention} you're already in the lobby")
 
 
-async def lobby_leave_helper(ctx, user):
+async def lobby_leave(ctx, user):
     if user.mention in list_of_players:
         list_of_players.remove(user.mention)
         await ctx.send(f"{user.mention} left the lobby")
         filename = (f"{user}_avatar.jpg")
         path = f"Avatars/{filename}"
         os.remove(path=path)
-    else: 
+    else:
         await ctx.send(f"{user.mention} you're not in the lobby")
-        
+
 
 @discord_bot.command(name="open_lobby")
 async def open_lobby(ctx):
@@ -82,11 +82,11 @@ async def open_lobby(ctx):
             reaction, user = await discord_bot.wait_for("reaction_add", timeout=60, check=check_for_reaction)
 
             if str(reaction.emoji) == "✅":
-                await lobby_join_helper(ctx, user)
+                await lobby_join(ctx, user)
                 await message.remove_reaction(reaction, user)
                     
             elif str(reaction.emoji) == "❌":
-                await lobby_leave_helper(ctx, user)
+                await lobby_leave(ctx, user)
                 await message.remove_reaction(reaction, user)
             else:
                 await message.remove_reaction(reaction, user)
@@ -97,15 +97,15 @@ async def open_lobby(ctx):
 
 
 @discord_bot.command(name="join_lobby")
-async def join_lobby(ctx):
+async def join_lobby_command(ctx):
     user = ctx.message.author
-    await lobby_join_helper(ctx, user)
+    await lobby_join(ctx, user)
 
- 
+
 @discord_bot.command(name="leave_lobby")
-async def leave_lobby(ctx):
+async def leave_lobby_command(ctx):
     user = ctx.message.author
-    await lobby_leave_helper(ctx, user)
+    await lobby_leave(ctx, user)
 
 
 @discord_bot.command(name="lobby")
@@ -121,5 +121,6 @@ async def return_player_in_lobby(ctx):
 @discord_bot.command(name="start")#start game
 async def start_game(ctx):
     pass
+
 
 discord_bot.run(TOKEN)

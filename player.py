@@ -14,6 +14,8 @@ class Player:
         
     def pay_money(self, money_removed: int):
         self.money -= money_removed
+        if self.money < 0:
+            return "player_is_in_debt"
     
     def player_moves(self, number_of_moves: int):
         if self.player_position == 40:

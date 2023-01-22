@@ -122,8 +122,6 @@ class Monopoly_bord:
     def create_an_image_of_the_playfield(self):
         pygame.image.save(self.surface, "GameStates/current_Playfield.png")
 
-
-
 #shows me that it works
 male1 = pygame.image.load("images\Character\8Pixel_gamecharacter_male1.png")
 female2 = pygame.image.load("images\Character\8Pixel_gamecharacter_female2.png")

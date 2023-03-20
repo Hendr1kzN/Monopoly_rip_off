@@ -2,3 +2,4 @@
 __pycache__
 .env
 GameStates/current_Playfield.png
+.vscode/settings.json
